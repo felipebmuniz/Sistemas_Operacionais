@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<thread.h>
+#include<pthread.h>
 
 int main (void) {
     printf ("Hello Word!!");
