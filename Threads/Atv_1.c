@@ -25,6 +25,7 @@ int main() {
     pthread_create(&thread1, NULL, cont, &c);
     pthread_create(&thread2, NULL, cont, &d);
 
-    pthread_exit(NULL);
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL);
     return 0;
 }
