@@ -22,6 +22,7 @@ void *somatorio (void *ard, void **mat) {
 
      int i;
      for (i = 0; i < 5; i++) {
+         // Valor da variavel l não coresponde com oq era esperado, com o valor 1 para linha da matriz executa mas não é o esperado também
          soma = soma + matriz[1][i];
      }
 
