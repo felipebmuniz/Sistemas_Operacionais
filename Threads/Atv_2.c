@@ -48,15 +48,21 @@
  }
 
  void *somatorio (void *ard) {
-     // Recebendo o endereço da linha do somatorio
+     // Recebendo o endereço da linha do somatorio e convertendo seu valor
      int *linha = (int*) ard;
+     
+     //realizando a recpção do valor do ponteiro para passar na matriz
      int l = *linha;
-     int soma = 0;
-     int i;
 
+     //variavel para realização do somatório
+     int soma = 0;
+     
+     int i;
      for (i = 0; i < 5; i++) {
+         // Realizando a soma dos valores das colunas nas linhas respctivas
          soma = soma + matriz[l][i];
      }
+     
      printf("Valor do somatorio da linha %d: %d\n", l, soma);
      Sleep(0);
  }
@@ -65,10 +71,11 @@
      // Instanciando o vetor de threads para somatorio de cada linha da matriz
      pthread_t thread[NUMTHREADS];
 
-     // Cria a matriz e demonstra ela para o usuario
+     // Cria a matriz dinâmica e demonstra ela para o usuario, preenchida por rand
      preecherMatriz();
 
-     // Criando as threads no seu vetor e passando a função somatorio para a execução e a linha que deve ser somada
+     // Criando as threads no seu vetor e passando a função somatorio para a
+     // execução e a linha que deve ser somada
      int aux = 0;
      for (;aux < NUMTHREADS; aux++) {
          printf("Thread: %d\t", aux);
