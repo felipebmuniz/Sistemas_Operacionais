@@ -6,6 +6,7 @@
  
 #include <stdio.h>
 #include <pthread.h>
+#include <windows.h>
 
 // Função para realizar a contagem decrescente e crescente
 void *cont(void *ard) {
@@ -26,6 +27,7 @@ void *cont(void *ard) {
             printf("T2: %d\n", i);
         }
     }
+    Sleep(0);
 }
 
 int main() {
