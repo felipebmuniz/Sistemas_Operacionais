@@ -62,7 +62,6 @@
 
  void main()
  {  
-
      // Instanciando o vetor de threads para somatorio de cada linha da matriz
      pthread_t thread[5];
 
