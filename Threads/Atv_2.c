@@ -13,6 +13,7 @@
  // Definindo o tamanho fixo da matriz a ser trabalhada
  #define LINHA 5
  #define COLUM 5
+ #define NUMTHREADS 5
 
  // Declarando variável ponteiro para ponteiro
  int **matriz;
@@ -60,20 +61,18 @@
      Sleep(0);
  }
 
- void main()
- {  
+ void main() {  
      // Instanciando o vetor de threads para somatorio de cada linha da matriz
-     pthread_t thread[5];
+     pthread_t thread[NUMTHREADS];
 
      // Cria a matriz e demonstra ela para o usuario
      preecherMatriz();
 
      // Criando as threads no seu vetor e passando a função somatorio para a execução e a linha que deve ser somada
      int aux = 0;
-     while (aux <= 4) {
+     for (;aux < NUMTHREADS; aux++) {
          printf("Thread: %d\t", aux);
          pthread_create(&thread[aux], NULL, somatorio(&aux), NULL);
-         aux++;
      } 
      
      // Responsavel por esperar todas as threads criadas executarem
