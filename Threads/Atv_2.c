@@ -9,71 +9,66 @@
  #include <stdlib.h>
  #include <pthread.h>
 
-// Definindo o tamanho fixo da matriz a ser trabalhada
+ // Definindo o tamanho fixo da matriz a ser trabalhada
  #define LINHA 5
  #define COLUM 5
 
 void *somatorio (void *ard, void **mat) {
      // Recebendo o endereço da linha do somatorio
-     int **matriz = (int**) mat;
+     int **m = (int**) mat;
      int *linha = (int*) ard;
      int l = *linha;
      int soma = 0;
-
      int i;
-     for (i = 0; i < 5; i++) {
-         // Valor da variavel l não coresponde com oq era esperado, com o valor 1 para linha da matriz executa mas não é o esperado também
-         soma = soma + matriz[1][i];
-     }
 
+     for (i = 0; i < 5; i++) {
+         soma = soma + m[l][i];
+     }
      printf("Valor do somatorio da linha %d: %d\n", l, soma);
 }
 
- int main()
+ void main()
  {  
-     // Instanciando o vetor de threads para somatorio de cada linha da matriz
-     pthread_t thread[5];
-     
-
      // Declarando variável ponteiro para ponteiro
      int **matriz;
 
+     // Instanciando o vetor de threads para somatorio de cada linha da matriz
+     pthread_t thread[5];
+
      // Aloca o vetor de ponteiros
-     matriz = (int**)malloc(LINHA * sizeof(int*));
+     matriz = (int**)malloc(5 * sizeof(int*));
 
      // Alocando cada uma das linhas da matriz
      int i;
-     for (i = 0; i < LINHA; i++) {
-         matriz[i] = (int*)malloc(COLUM * sizeof(int));
+     for (i = 0; i < 5; i++) {
+         matriz[i] = (int*)malloc(5* sizeof(int));
      }
 
      // Preenchendo a matriz
      int j;
-     for (i = 0; i < LINHA; i++) {
-         for (j = 0; j < COLUM; j++) {
+     for (i = 0; i < 5; i++) {
+         for (j = 0; j < 5; j++) {
              //preenchimento de valores aleatorios entre 0 e 24;
-             matriz[i][j] = rand() % 24;
+             matriz[i][j] = (rand() % 100);
          }
      }
 
      // Mostra a matriz para o usuário
-     for(i = 0; i < LINHA; i++) {
-		 for(j = 0; j < COLUM; j++) {
+     for(i = 0; i < 5; i++) {
+		 for(j = 0; j < 5; j++) {
 			printf("%d\t", matriz[i][j]);
         }
         printf("\n");
-	}
-
+	 }
+     printf("\n");
      // Criando as threads no seu vetor e passando a função somatorio para a execução e a linha que deve ser somada
-     int l = 0;
-     while (l < 5) {
-         pthread_create(&thread[l], NULL, somatorio, (&l, matriz));
-         l++;
-    }
-     
+     int aux = 0;
+     while (aux <= 4) {
+         printf("Thread: %d\t", aux);
+         pthread_create(&thread[aux], NULL, somatorio(&aux, matriz), NULL);
+         aux++;
+     } 
      
      // Responsavel por esperar todas as threads criadas executarem
      pthread_exit(NULL);
-     
-     return 0;
  }
