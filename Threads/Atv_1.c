@@ -22,7 +22,7 @@ void *cont(void *ard) {
         }
     } else
     {
-        for (i = 500; i > 0; i--) {
+        for (i = 499; i > 0; i--) {
             // Decrescente
             printf("T2: %d\n", i);
         }
