@@ -38,7 +38,7 @@ para produtores).
 #include <stdlib.h>
 #include <pthread.h>
 
-#define LOOP 100000
+#define LOOP 1000000
 #define QTD 4
 int valor = 0;
 
@@ -61,10 +61,10 @@ void *consumidor(int id)
 	int cont = 0;
 	while (cont < LOOP) /* Loop para verificação de consumir produto */
 	{ 
-        if (valor != 0)
+        if (valor != 0) /* Condição que o consumidor so pode consumir se o valor diferente de zero */
         {
             printf("Consumidor %d consumiu %d\n", id, valor);
-             valor = 0;
+             valor = 0;     /* Consome o valor que foi produzido pelo produtor */
         }
         cont ++;
 	}
@@ -72,21 +72,22 @@ void *consumidor(int id)
 
 void main()  
 {
+    /* Definindo os vetores de threads */
     pthread_t prod[QTD];
 	pthread_t cons[QTD];
 
-    int id;
+    int id;     /* ID de cada thread na sua criação */
 
-	printf("Programa Produtor-Consumidor\n");
+	//printf("Programa Produtor-Consumidor\n\n");
 
-    printf("Disparando threads produtores\n");
+    //printf("Disparando threads produtores\n\n");
 
     for (id = 0; id < QTD; id++)
     {
         pthread_create(&prod[id], NULL, produtor, id);
     }
 
-    printf("Disparando threads consumidores\n");
+    //printf("Disparando threads consumidores\n");
 	
     for (id = 0; id < QTD; id++)
     {
@@ -104,3 +105,15 @@ void main()
 	
     printf("Terminado processo Produtor-Consumidor.\n\n");
 }
+
+/* Execute os threads algumas vezes, observe as saídas e responda as observações:
+
+3.1-Por que alguns consumidores consumiram mais de uma vez em seguida o mesmo
+número?
+
+3.2-Por que o consumidor consumiu um determinado número, mas o produtor só o
+produziu depois?
+
+3.3-Tirando o fato de ser gerado números aleatórios, por que a execução sempre ocorre
+em ordem diferente?
+*/
