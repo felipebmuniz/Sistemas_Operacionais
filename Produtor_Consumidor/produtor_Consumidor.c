@@ -76,7 +76,7 @@ void main()
     pthread_t prod[QTD];
 	pthread_t cons[QTD];
 
-    int id;     /* ID de cada thread na sua criação */
+    int id, i;     /* ID de cada thread na sua criação */
 
 	//printf("Programa Produtor-Consumidor\n\n");
 
@@ -94,14 +94,11 @@ void main()
         pthread_create(&cons[id], NULL, consumidor, id);
     }
 
-	pthread_join(prod[0],NULL);
-	pthread_join(prod[1],NULL);
-	pthread_join(prod[2],NULL);
-	pthread_join(prod[3],NULL);
-	pthread_join(cons[0],NULL);
-	pthread_join(cons[1],NULL);
-	pthread_join(cons[2],NULL);
-	pthread_join(cons[3],NULL);
+    for (i = 0; i < QTD; i++)
+    {
+        pthread_join(prod[i],NULL);
+        pthread_join(cons[i],NULL);
+    }
 	
     printf("Terminado processo Produtor-Consumidor.\n\n");
 }
@@ -111,9 +108,24 @@ void main()
 3.1-Por que alguns consumidores consumiram mais de uma vez em seguida o mesmo
 número?
 
+R: Pois na criação do algoritmo não se tem um controle bem definido sobre os processos em execução, portanto,
+quando um consumidor terminou de consumir o escalonador trocou para outro consumidor antes de encerrar o anterior
+ocasionando um erro no consumo dos produtos.
+
 3.2-Por que o consumidor consumiu um determinado número, mas o produtor só o
 produziu depois?
 
+R: Se da ao mesmo problema da pergunta anterior, os processos tem uma variável em comum na região crítia,
+onde o valor do produto é constantemente alterado, sendo que não foi implementado um metodo de anulação de corridas
+o escalonador tem livre acesso a troca de processos em execução, sendo assim antes o produtor foi executado e
+produziu e pois na variável de produtos, porém, antes de ser encerrado o escalonador trocou para um processo de 
+consumidor e consumiu o valor encontrado em produtos e só depois o produtor foi encerrado.
+
 3.3-Tirando o fato de ser gerado números aleatórios, por que a execução sempre ocorre
 em ordem diferente?
+
+Se dá ao fato de não ter um controle de fluxo entre os processos, para a resolução deste problema envolvendo o
+algoritmo produtor/consumidor pode-se implementar diferentes soluções, como: a utilização de buffer e variável de acesso
+, porém, nesse método ocorre espera ocupada e desperdício de recursos de processamento; outro método é a utilização de 
+semáforos e o mutex, tendo assim um resultado mais satisfatório e um bom controle da ordem de execução dos processos do algoritmo.
 */
